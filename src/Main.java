@@ -18,11 +18,16 @@ public class Main {
                 int numberOfStep = scanner.nextInt();// ввести количество шагов за определенный день
                 stepTracker.saveStepNumber(month, day, numberOfStep);
             } else if (userInput == 2) {
+                System.out.println("Введите месяц: (По русски, пример: 'Январь')");
                 scanner.nextLine();
                 String month = scanner.nextLine();
                 stepTracker.statistics(month); // напечатать статистику за определенный месяц
             } else if (userInput == 3) {
-                // изменить цель по количеству шагов вдень
+                System.out.println("Текущая цель по шагам: " + stepTracker.goalOfStep);// изменить цель по количеству шагов вдень
+                System.out.println("Введите новую цель: ");
+                int goal = scanner.nextInt();
+                stepTracker.goalStep(goal);
+
             } else {
                 System.out.println("Такой команды нет!");
 

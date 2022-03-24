@@ -5,6 +5,7 @@ public class StepTracker {
     int goalOfStep = 10000;
     HashMap<Integer, MonthData> monthToData = new HashMap<Integer, MonthData>();
     HashMap<String, Integer> monthAndValues = new HashMap<>();
+    Converter converter = new Converter();
 
     public StepTracker() {
         for (int i = 0; i < 12; i++) {
@@ -55,6 +56,10 @@ public class StepTracker {
     }
 
     public void statistics(String month) {
+        int sum = 0;
+        int max = 0;
+        double average = 0;
+        int series = 0;
         if (!monthAndValues.containsKey(month)) {
             System.out.println("Такого месяца нет!");
             return;
@@ -63,18 +68,43 @@ public class StepTracker {
         MonthData DayAndStep = monthToData.get(numberMonth);
         ArrayList<String> day = new ArrayList<>();
 
+
         for (Integer key : DayAndStep.monthData.keySet()) {
             Integer values = DayAndStep.monthData.get(key);
             day.add(key + " день: " + values);
+            sum += values;
 
+            if (values > max) {
+                max = values;
+            }
+            int i = 1;
+
+            if (values > goalOfStep) {
+                i++;
+                if (i > series) {
+                    series = i;
+                }
+            } else {
+                i = 0;
+            }
 
         }
-
+        average = sum / 30;
         System.out.println(String.join(", ", day));
-        
+        System.out.println("Общее число шагов за месяц: " + sum);
+        System.out.println("Максимальное число шагов за месяц: " + max);
+        System.out.println("Среднее число шагов за месяц: " + average);
+        converter.Converter(sum);
+        System.out.println("Лучшая серия: " + series);
     }
 
-    public void goalStep() {
+    public void goalStep(int goal) {
+        if (goal < 0) {
+            System.out.println("Шаги не могут быть отрицательными!");
+            return;
+        }
+        goalOfStep = goal;
+
 
     }
 
